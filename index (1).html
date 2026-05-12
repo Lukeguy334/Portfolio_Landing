@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lucas Silva — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0b1120;
+      --navy2:  #111827;
+      --card:   #161f30;
+      --border: #1e2d45;
+      --gold:   #c9a84c;
+      --gold2:  #e8c97a;
+      --text:   #e8edf5;
+      --muted:  #7a8ba3;
+      --light:  #b0bfd4;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 3rem;
+      background: rgba(11,17,32,0.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.15rem;
+      letter-spacing: 0.04em;
+      color: var(--gold2);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--light);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--gold2); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 7rem 3rem 5rem;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 80% 40%, rgba(201,168,76,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 10% 70%, rgba(11,40,80,0.5) 0%, transparent 70%);
+      z-index: 0;
+    }
+
+    /* Decorative vertical line */
+    .hero-line {
+      position: absolute;
+      left: 3rem;
+      top: 7rem;
+      bottom: 5rem;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--gold) 30%, var(--gold) 70%, transparent);
+      opacity: 0.35;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 780px;
+      padding-left: 3rem;
+      animation: fadeUp 0.9s ease both;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.4rem;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 28px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      line-height: 1.05;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--gold2);
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+      color: var(--muted);
+      margin-top: 1.4rem;
+      max-width: 520px;
+      line-height: 1.75;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.8rem;
+    }
+
+    .tag {
+      padding: 0.3rem 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: var(--light);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .hero-cta {
+      margin-top: 2.4rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.6rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.22s ease;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--navy);
+    }
+    .btn-primary:hover { background: var(--gold2); transform: translateY(-2px); }
+
+    .btn-ghost {
+      border: 1px solid var(--border);
+      color: var(--light);
+    }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold2); transform: translateY(-2px); }
+
+    /* ── SECTION WRAPPER ── */
+    section {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 5rem 3rem;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .about-text p {
+      color: var(--light);
+      font-size: 0.95rem;
+      line-height: 1.85;
+      margin-bottom: 1rem;
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      align-self: start;
+    }
+
+    .stat {
+      background: var(--card);
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.2rem;
+      color: var(--gold2);
+      line-height: 1;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.4rem;
+      display: block;
+    }
+
+    /* ── SKILLS BAR ── */
+    .skills-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .skill-chip {
+      padding: 0.35rem 0.85rem;
+      background: rgba(201,168,76,0.08);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 2px;
+      font-size: 0.73rem;
+      color: var(--gold2);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      animation: fadeUp 0.7s ease both;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(201,168,76,0.4);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4), 0 0 0 1px rgba(201,168,76,0.1);
+    }
+
+    .card-header {
+      padding: 1.8rem 1.8rem 1.2rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .card-icon {
+      width: 42px;
+      height: 42px;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .card-date {
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .card-body {
+      padding: 1.4rem 1.8rem;
+      flex: 1;
+    }
+
+    .card-body h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.35rem;
+      margin-bottom: 0.6rem;
+      line-height: 1.2;
+    }
+
+    .card-body p {
+      font-size: 0.85rem;
+      color: var(--light);
+      line-height: 1.75;
+    }
+
+    .card-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 1.1rem;
+    }
+
+    .metric {
+      padding: 0.25rem 0.65rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      font-size: 0.68rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    .card-footer {
+      padding: 1rem 1.8rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+      transition: color 0.2s, gap 0.2s;
+    }
+
+    .card-link:hover { color: var(--gold2); gap: 0.65rem; }
+
+    .card-link svg {
+      width: 12px;
+      height: 12px;
+      transition: transform 0.2s;
+    }
+
+    .card-link:hover svg { transform: translateX(3px); }
+
+    /* ── CONTACT / FOOTER ── */
+    .contact-section {
+      text-align: center;
+      padding: 5rem 2rem 6rem;
+    }
+
+    .contact-section h2 { margin-bottom: 0.8rem; }
+
+    .contact-section p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      max-width: 420px;
+      margin: 0 auto 2rem;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .project-card:nth-child(1) { animation-delay: 0.05s; }
+    .project-card:nth-child(2) { animation-delay: 0.15s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .hero { padding: 6rem 1.5rem 4rem; }
+      .hero-content { padding-left: 1.5rem; }
+      section { padding: 4rem 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <span class="nav-logo">Lucas Silva</span>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-line"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Portfolio</div>
+      <h1>Lucas <em>Silva</em></h1>
+      <p class="hero-subtitle">
+        Business Analytics & Information Systems student at the University of South Florida — building dashboards, data pipelines, and web applications that turn raw data into decisions.
+      </p>
+      <div class="hero-tags">
+        <span class="tag">SQL</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">Tableau</span>
+        <span class="tag">Python</span>
+        <span class="tag">Chart.js</span>
+        <span class="tag">Data Visualization</span>
+        <span class="tag">Web Analytics</span>
+      </div>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="mailto:lsilva334256@gmail.com" class="btn btn-ghost">Get in Touch</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label">About Me</div>
+    <h2>Analyst. Builder. Problem Solver.</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I'm a Business Analytics & Information Systems student at USF (graduating May 2026) with a minor in Creative Writing — a combination that helps me not just find insights in data, but communicate them clearly.
+        </p>
+        <p>
+          My projects focus on real-world analytics: interactive dashboards, conversion funnels, and data-driven web apps. I enjoy the full cycle — from querying a database to building the front-end that makes the numbers make sense to a stakeholder.
+        </p>
+        <p>
+          Outside of coursework, I hold a Google Technical Writing Certificate and have been on the Dean's List multiple semesters.
+        </p>
+        <div class="skills-row">
+          <span class="skill-chip">SQL</span>
+          <span class="skill-chip">Excel &amp; Pivot Tables</span>
+          <span class="skill-chip">Tableau</span>
+          <span class="skill-chip">KPI Tracking</span>
+          <span class="skill-chip">Google Analytics</span>
+          <span class="skill-chip">HTML / CSS / JS</span>
+          <span class="skill-chip">Python</span>
+          <span class="skill-chip">APIs &amp; JSON</span>
+          <span class="skill-chip">Git &amp; GitHub Pages</span>
+        </div>
+      </div>
+      <div class="about-stats">
+        <div class="stat">
+          <span class="stat-num">3.5</span>
+          <span class="stat-label">GPA</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">2</span>
+          <span class="stat-label">Live Dashboards</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">6.4K</span>
+          <span class="stat-label">Sessions Tracked</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">3×</span>
+          <span class="stat-label">Conversion Lift Found</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider"/>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-label">Work</div>
+    <h2>Featured Projects</h2>
+    <div class="projects-grid">
+
+      <!-- ShiftLens -->
+      <div class="project-card">
+        <div class="card-header">
+          <div class="card-icon">📊</div>
+          <span class="card-date">Feb 2025 – May 2025</span>
+        </div>
+        <div class="card-body">
+          <h3>ShiftLens</h3>
+          <p>
+            An interactive shift performance dashboard built for food &amp; beverage clients. Models realistic restaurant KPIs — table turnover rate, guest volume by section, and peak-hour traffic — across three shift views: Lunch, Dinner, and Weekend.
+          </p>
+          <div class="card-metrics">
+            <span class="metric">Table Turnover Rate</span>
+            <span class="metric">Guest Volume</span>
+            <span class="metric">Peak-Hour Traffic</span>
+            <span class="metric">Custom SVG Charts</span>
+            <span class="metric">HTML / CSS / JS</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <a href="https://lukeguy334.github.io/Portfolio/shiftlens.html" target="_blank" class="card-link">
+            Live Demo
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 8h10M9 4l4 4-4 4"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Marketing Dashboard -->
+      <div class="project-card">
+        <div class="card-header">
+          <div class="card-icon">📈</div>
+          <span class="card-date">Feb 2025 – May 2025</span>
+        </div>
+        <div class="card-body">
+          <h3>Digital Marketing Analytics Dashboard</h3>
+          <p>
+            A multi-view dashboard tracking 6 months of marketing performance across 6,400 sessions and 4 traffic channels. Surfaced that referral traffic converted at 5.8% vs. 1.9% for social — a 3× gap — and mapped a full funnel from 6,400 visits to 262 conversions.
+          </p>
+          <div class="card-metrics">
+            <span class="metric">6,400 Sessions</span>
+            <span class="metric">CVR &amp; Bounce Rate</span>
+            <span class="metric">Conversion Funnel</span>
+            <span class="metric">4 Traffic Channels</span>
+            <span class="metric">Chart.js</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <a href="https://lukeguy334.github.io/Portfolio/marketing-dashboard.html" target="_blank" class="card-link">
+            Live Demo
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 8h10M9 4l4 4-4 4"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider"/>
+
+  <!-- CONTACT -->
+  <div class="contact-section" id="contact">
+    <div class="section-label" style="justify-content:center; max-width:200px; margin:0 auto 1rem;">Contact</div>
+    <h2>Let's Connect</h2>
+    <p>Open to internships, analytics roles, and interesting projects. Feel free to reach out.</p>
+    <div class="contact-links">
+      <a href="mailto:lsilva334256@gmail.com" class="btn btn-primary">lsilva334256@gmail.com</a>
+      <a href="https://linkedin.com/in/lucashalesilva" target="_blank" class="btn btn-ghost">LinkedIn</a>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 Lucas Silva · Tampa, FL · Built with HTML & CSS
+  </footer>
+
+</body>
+</html>
